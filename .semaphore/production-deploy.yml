@@ -6,10 +6,10 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: Get Files
+  - name: Download Artifacts
     task:
       jobs:
-        - name: 'Download and Decompress'
+        - name: Pull and Decompress
           commands:
             # Download Artifacts on Workflow Level
             - artifact pull workflow GeneratedFiles.tar.gz

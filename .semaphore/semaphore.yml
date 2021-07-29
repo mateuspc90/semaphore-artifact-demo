@@ -24,10 +24,10 @@ blocks:
           commands:
             - echo 'Generate HTML Files'
 
-  - name: Upload Tested Files
+  - name: Upload Artifacts
     task:
       jobs:
-        - name: Push Artifacts
+        - name: Compress and push
           commands:
             # assemble generated HTML files
             - tar -czf GeneratedFiles.tar.gz *.html

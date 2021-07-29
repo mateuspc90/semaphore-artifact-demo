@@ -1,0 +1,39 @@
+# .semaphore/semaphore.yml
+version: v1.0
+name: Test Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: Run Tests
+    task:
+      jobs:
+        - name: Run Spell Checks
+          commands:
+            - echo 'Running Spell Checks'
+        - name: Check Links
+          commands:
+            - echo 'Running tests'
+  
+  - name: Generate HTML Files
+    task:
+      jobs:
+        - name: Generate HTML
+          commands:
+            - echo 'Generate HTML Files'
+
+  - name: Upload Tested Files
+    task:
+      jobs:
+        - name: Push Artifacts
+          commands:
+            # assemble generated HTML files
+            - tar -czf GeneratedFiles.tar.gz *.html
+            # Upload Artifacts on Workflow Level
+            - artifact push workflow GeneratedFiles.tar.gz
+
+promotions:
+  - name: Production deploy
+    pipeline_file: production-deploy.yml

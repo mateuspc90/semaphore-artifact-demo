@@ -1,0 +1,24 @@
+# .semaphore/production-deploy.yml
+version: v1.0
+name: Deploy to production
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Get Files
+    task:
+      jobs:
+        - name: 'Download and Decompress'
+          commands:
+            # Download Artifacts on Workflow Level
+            - artifact pull workflow GeneratedFiles.tar.gz
+            # Decompress HTML files
+            - tar -xzf GeneratedFiles.tar.gz
+            
+  - name: Deploy
+    task:
+      jobs:
+        - name: 'Everything'
+          commands:
+            - echo 'Deploying to production!'
